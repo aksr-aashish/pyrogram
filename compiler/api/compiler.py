@@ -116,11 +116,10 @@ def get_type_hint(type: str) -> str:
 
     if is_core:
         return f"Union[None, {type}] = None" if is_flag else type
-    else:
-        ns, name = type.split(".") if "." in type else ("", type)
-        type = f'"raw.base.' + ".".join([ns, name]).strip(".") + '"'
+    ns, name = type.split(".") if "." in type else ("", type)
+    type = '"raw.base.' + ".".join([ns, name]).strip(".") + '"'
 
-        return f'{type}{" = None" if is_flag else ""}'
+    return f'{type}{" = None" if is_flag else ""}'
 
 
 def sort_args(args):

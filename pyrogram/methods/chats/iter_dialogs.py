@@ -80,13 +80,12 @@ class IterDialogs(Scaffold):
                 chat_id = utils.get_peer_id(message.peer_id)
                 messages[chat_id] = await types.Message._parse(self, message, users, chats)
 
-            dialogs = []
+            dialogs = [
+                types.Dialog._parse(self, dialog, messages, users, chats)
+                for dialog in r.dialogs
+                if isinstance(dialog, raw.types.Dialog)
+            ]
 
-            for dialog in r.dialogs:
-                if not isinstance(dialog, raw.types.Dialog):
-                    continue
-
-                dialogs.append(types.Dialog._parse(self, dialog, messages, users, chats))
 
             if not dialogs:
                 return

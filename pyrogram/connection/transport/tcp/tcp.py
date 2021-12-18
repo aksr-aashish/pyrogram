@@ -48,8 +48,8 @@ class TCP:
         self.loop = asyncio.get_event_loop()
 
         if proxy.get("enabled", False):
-            hostname = proxy.get("hostname", None)
-            port = proxy.get("port", None)
+            hostname = proxy.get("hostname")
+            port = proxy.get("port")
 
             try:
                 ip_address = ipaddress.ip_address(hostname)
