@@ -263,9 +263,8 @@ class Session:
                 msg_id = msg.body.req_msg_id
             elif isinstance(msg.body, raw.types.Pong):
                 msg_id = msg.body.msg_id
-            else:
-                if self.client is not None:
-                    self.loop.create_task(self.client.handle_updates(msg.body))
+            elif self.client is not None:
+                self.loop.create_task(self.client.handle_updates(msg.body))
 
             if msg_id in self.results:
                 self.results[msg_id].value = getattr(msg.body, "result", msg.body)
@@ -360,7 +359,7 @@ class Session:
 
         # Call log.debug twice because calling it once by appending "data" to the previous string (i.e. f"Kind: {data}")
         # will cause "data" to be evaluated as string every time instead of only when debug is actually enabled.
-        log.debug(f"Sent:")
+        log.debug('Sent:')
         log.debug(message)
 
         payload = await self.loop.run_in_executor(
